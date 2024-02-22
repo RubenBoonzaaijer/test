@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Knowledge Base Query</title>
+<script>
+async function searchKnowledgeBase() {
+    const question = document.getElementById('searchQuery').value;
+    const apiUrl = 'https://general-runtime.voiceflow.com/knowledge-base/query';
+    const apiKey = 'VF.DM.65d71c56a1532ae87f37b4ad.DY56RwYddazemqFA';
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': apiKey,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                question: question
+            })
+        });
+        const data = await response.json();
+        document.getElementById('results').innerHTML = JSON.stringify(data, null, 2);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+</script>
+</head>
+<body>
+<h2>Ask a Question</h2>
+<input type="text" id="searchQuery" placeholder="Why is the sky blue?">
+<button onclick="searchKnowledgeBase()">Ask</button>
+<pre id="results"></pre>
+</body>
+</html>
